@@ -1,28 +1,35 @@
+// Mengimpor fungsi dan library yang dibutuhkan
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc"; // Atau '@vitejs/plugin-react'
+import react from "@vitejs/plugin-react-swc"; // Plugin untuk React
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // --- PENGATURAN UNTUK GITHUB PAGES ---
-// Ganti 'nama-repo-anda' dengan NAMA REPOSITORY Anda yang sebenarnya di GitHub.
+// Pastikan nama ini SAMA PERSIS dengan nama repository Anda di GitHub.
 const repoName = '/dapurmama/';
 // ------------------------------------
 
+// Ini adalah konfigurasi utama Vite
 export default defineConfig(({ mode }) => ({
-  // Baris ini MENYEDIAKAN BASE PATH yang diperlukan oleh GitHub Pages
+  // Baris ini secara cerdas mengatur base path:
+  // - Saat 'npm run build' (production), base path akan menjadi '/dapurmama/'
+  // - Saat 'npm run dev' (development), base path akan menjadi '/'
   base: mode === 'production' ? repoName : '/',
 
+  // Pengaturan untuk server development lokal
   server: {
     host: "::",
     port: 8080,
   },
   
+  // Daftar plugin yang digunakan
   plugins: [
-    react(), 
-    // componentTagger hanya diperlukan dalam mode development (mode === "development")
+    react(),  
+    // lovable-tagger hanya aktif saat development untuk membantu debugging
     mode === "development" && componentTagger()
-  ].filter(Boolean), // .filter(Boolean) akan menghilangkan nilai false/null
+  ].filter(Boolean), // Trik untuk menghapus plugin yang non-aktif
 
+  // Pengaturan 'alias' untuk path import yang lebih pendek (contoh: import dari '@/components')
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
