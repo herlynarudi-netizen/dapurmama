@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // --- PENGATURAN UNTUK GITHUB PAGES ---
 // Ganti 'nama-repo-anda' dengan NAMA REPOSITORY Anda yang sebenarnya di GitHub.
-const repoName = '/nama-repo-anda/';
+const repoName = '/dapurmama/';
 // ------------------------------------
 
 export default defineConfig(({ mode }) => ({
